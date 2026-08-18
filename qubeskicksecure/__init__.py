@@ -65,10 +65,13 @@ class QubesKicksecureExtension(qubes.ext.Extension):
         """Retroactively add tags to kicksecure."""
         self.apply_tags(vm)
 
-    @qubes.ext.handler("property-set:template")
+    @qubes.ext.handler(
+        "property-set:template",
+        "property-reset:active_template",
+    )
     def on_property_set_template(
-        self, vm, event, name, newvalue, oldvalue=None
+        self, vm, event, name, newvalue=None, oldvalue=None
     ):
-        # pylint: disable=too-many-positional-arguments, unused-argument
         """Add tags to AppVMs that become based upon Kicksecure."""
+        # pylint: disable=too-many-positional-arguments,unused-argument
         self.apply_tags(vm)
